@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AR.js Example</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/3.1.0/aframe/build/aframe-ar.js"></script>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <a-scene embedded arjs>
+      <img id="sphere-texture" src="earth.jpg" alt="Sphere Texture">
+
+    <!-- Sky and Ground -->
+    <!-- <a-sky color="#87CEEB"></a-sky> -->
+    <!-- <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#228B22"></a-plane> -->
+
+    <!-- Sphere with Image Texture -->
+    <a-sphere id="rotatingSun" src="sun.jpg" position="0 1 10" radius="10"></a-sphere>
+    <a-sphere id="rotatingVenus" src="venus.jpg" position="0 1 -5" radius="0.9"></a-sphere>
+    <a-sphere id="rotatingMercury" src="mercury.jpg" position="0 1 -2" radius=".5"></a-sphere>
+
+    <a-sphere id="rotatingMoon" src="moon.jpg" position="0 1 -8" radius="0.3"></a-sphere>
+    <a-sphere id="rotatingSphere" src="#sphere-texture" position="0 1 -10" radius="1"></a-sphere>
+    <a-sphere id="rotatingMars" src="mars.jpg" position="0 1 -14" radius="0.8"></a-sphere>
+
+
+    <!-- Camera with movement controls -->
+    <a-entity camera position="0 0.6 0" wasd-controls look-controls>
+      <a-cursor></a-cursor>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    // Function to rotate the spheres continuously
+    function rotateSpheres() {
+      var sun = document.querySelector('#rotatingSun');
+      var venus = document.querySelector('#rotatingVenus');
+      var mercury = document.querySelector('#rotatingMercury');
+      var moon = document.querySelector('#rotatingMoon');
+      var earth = document.querySelector('#rotatingSphere');
+      var mars = document.querySelector('#rotatingMars');
+
+      var sunRotation = sun.getAttribute('rotation');
+      var venusRotation = venus.getAttribute('rotation');
+      var mercuryRotation = mercury.getAttribute('rotation');
+      var moonRotation = moon.getAttribute('rotation');
+      var earthRotation = earth.getAttribute('rotation');
+      var marsRotation = mars.getAttribute('rotation');
+
+      sunRotation.y += 0.5;
+      venusRotation.y += 0.3;
+      mercuryRotation.y += 0.7;
+      moonRotation.y += 0.8;
+      earthRotation.y += 0.6;
+      marsRotation.y += 0.4;
+
+      sun.setAttribute('rotation', sunRotation);
+      venus.setAttribute('rotation', venusRotation);
+      mercury.setAttribute('rotation', mercuryRotation);
+      moon.setAttribute('rotation', moonRotation);
+      earth.setAttribute('rotation', earthRotation);
+      mars.setAttribute('rotation', marsRotation);
+
+      requestAnimationFrame(rotateSpheres);
+    }
+
+    // Start the rotation
+    rotateSpheres();
+  </script>
+</body>
+</html>
