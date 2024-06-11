@@ -18,12 +18,15 @@
         <a-sphere id="rotatingSphere" src="#sphere-texture" position="0 1 -50" radius="1"></a-sphere>
         <a-sphere id="rotatingMars" src="mars.jpg" position="0 1 -70" radius="0.8"></a-sphere>
 
-        <a-entity camera position="0 0.6 0" wasd-controls look-controls>
-            <a-cursor></a-cursor>
-        </a-entity>
+        <a-entity id="camera" camera position="0 0.6 0" look-controls></a-entity>
     </a-scene>
 
     <script>
+        // Check if the device is a mobile device
+        function isMobileDevice() {
+            return /Mobi|Android/i.test(navigator.userAgent);
+        }
+
         // Function to rotate the spheres continuously
         function rotateSpheres() {
             var venus = document.querySelector('#rotatingVenus');
@@ -38,17 +41,28 @@
             var earthRotation = earth.getAttribute('rotation');
             var marsRotation = mars.getAttribute('rotation');
 
-            venusRotation.y += 0.3;
-            mercuryRotation.y += 0.7;
-            moonRotation.y += 0.8;
-            earthRotation.y += 0.6;
-            marsRotation.y += 0.4;
+            venusRotation.y += 0.03;
+            mercuryRotation.y += 0.07;
+            moonRotation.y += 0.08;
+            earthRotation.y += 0.06;
+            marsRotation.y += 0.04;
 
             venus.setAttribute('rotation', venusRotation);
             mercury.setAttribute('rotation', mercuryRotation);
             moon.setAttribute('rotation', moonRotation);
             earth.setAttribute('rotation', earthRotation);
             mars.setAttribute('rotation', marsRotation);
+
+            // If it's not a mobile device, enable WASD controls
+            if (!isMobileDevice()) {
+                var camera = document.querySelector('#camera');
+                var cameraPosition = camera.getAttribute('position');
+
+                if (cameraPosition.z < -0.5) {
+                    cameraPosition.z = -0.5;
+                    camera.setAttribute('position', cameraPosition);
+                }
+            }
 
             requestAnimationFrame(rotateSpheres);
         }
